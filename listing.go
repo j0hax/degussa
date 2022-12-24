@@ -67,5 +67,5 @@ func ParseRow(el *colly.HTMLElement) (*Item, error) {
 func (l Item) String() string {
 	b := float64(l.BuyPrice) / 100
 	s := float64(l.SellPrice) / 100
-	return fmt.Sprintf("%s: %s, (%.2f/%.2f)", l.ItemNo, l.Name, b, s)
+	return fmt.Sprintf("%s: %s (%.2f/%.2f)", l.ItemNo, l.Name, b, s)
 }
