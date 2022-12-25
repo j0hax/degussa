@@ -12,8 +12,10 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// Material allows us to differentiate between product materials
 type Material int
 
+// Degussa allows users to sort by these metals
 const (
 	Gold Material = iota
 	Silver
@@ -54,8 +56,8 @@ func extractNumbers(s string) int64 {
 	return int64(nat)
 }
 
-// GetMaterial determines the material type of a Degussa Product
-func GetMaterial(name string) Material {
+// getMaterial determines the material type of a Degussa Product
+func getMaterial(name string) Material {
 	l := strings.ToLower(name)
 
 	if strings.Contains(l, "gold") {
@@ -93,7 +95,7 @@ func parseRow(el *colly.HTMLElement) (*Item, error) {
 		ItemNo:    itemNo,
 		ImageURL:  img,
 		Name:      name,
-		Material:  GetMaterial(name),
+		Material:  getMaterial(name),
 		BuyPrice:  buy,
 		SellPrice: sell,
 	}, nil
