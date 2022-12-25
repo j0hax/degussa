@@ -7,8 +7,8 @@ import (
 )
 
 var c = colly.NewCollector(
-		colly.AllowedDomains("www.degussa-goldhandel.de"),
-	)
+	colly.AllowedDomains("www.degussa-goldhandel.de"),
+)
 
 // FilterTable fetches the price table and returns a list of products
 // which return true for f.
@@ -23,7 +23,7 @@ func FilterTable(f func(Item) bool) []Item {
 			}
 
 			if f(*l) {
-			items = append(items, *l)
+				items = append(items, *l)
 			}
 		})
 	})
@@ -37,5 +37,12 @@ func FilterTable(f func(Item) bool) []Item {
 func All() []Item {
 	return FilterTable(func(i Item) bool {
 		return true
+	})
+}
+
+// ByMaterial all items matching a material
+func ByMaterial(m Material) []Item {
+	return FilterTable(func(i Item) bool {
+		return i.Material == m
 	})
 }
