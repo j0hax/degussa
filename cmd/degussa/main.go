@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	for i, item := range degussa.All() {
-		fmt.Printf("[%d] %s\n", i+1, item)
+	for _, item := range degussa.All() {
+		fmt.Printf("%s\n", item)
 	}
 }

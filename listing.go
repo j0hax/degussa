@@ -12,13 +12,24 @@ import (
 	"github.com/gocolly/colly"
 )
 
+type Material int
+
+const (
+	Gold Material = iota
+	Silver
+	Platinum
+	Palladium
+	Diverse
+)
+
 // An Item contains general information of Degussa's items for sale
 type Item struct {
 	ItemNo    string `json:"itemNo"`
 	ImageURL  string `json:"imageURL"`
 	Name      string `json:"name"`
-	BuyPrice  int64  `json:"buyPrice"`
-	SellPrice int64  `json:"sellPrice"`
+	Material  Material
+	BuyPrice  int64 `json:"buyPrice"`
+	SellPrice int64 `json:"sellPrice"`
 }
 
 // extractNumbers strips all non-numeral characters in a string
@@ -43,6 +54,29 @@ func extractNumbers(s string) int64 {
 	return int64(nat)
 }
 
+// GetMaterial determines the material type of a Degussa Product
+func GetMaterial(name string) Material {
+	l := strings.ToLower(name)
+
+	if strings.Contains(l, "gold") {
+		return Gold
+	}
+
+	if strings.Contains(l, "silber") {
+		return Silver
+	}
+
+	if strings.Contains(l, "platin") {
+		return Platinum
+	}
+
+	if strings.Contains(l, "palladium") {
+		return Platinum
+	}
+
+	return Diverse
+}
+
 // parseRow parses a scraped Degussa price table row (tr) and returns item information
 func parseRow(el *colly.HTMLElement) (*Item, error) {
 	if el.Name != "tr" {
@@ -59,6 +93,7 @@ func parseRow(el *colly.HTMLElement) (*Item, error) {
 		ItemNo:    itemNo,
 		ImageURL:  img,
 		Name:      name,
+		Material:  GetMaterial(name),
 		BuyPrice:  buy,
 		SellPrice: sell,
 	}, nil
