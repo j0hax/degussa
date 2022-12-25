@@ -16,7 +16,7 @@ func All() []Item {
 
 	c.OnHTML("tbody", func(t *colly.HTMLElement) {
 		t.ForEach("tr", func(_ int, el *colly.HTMLElement) {
-			l, err := ParseRow(el)
+			l, err := parseRow(el)
 			if err != nil {
 				log.Panic(err)
 			}

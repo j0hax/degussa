@@ -43,8 +43,8 @@ func extractNumbers(s string) int64 {
 	return int64(nat)
 }
 
-// ParseRow parses a scraped Degussa price table row (tr) and returns item information
-func ParseRow(el *colly.HTMLElement) (*Item, error) {
+// parseRow parses a scraped Degussa price table row (tr) and returns item information
+func parseRow(el *colly.HTMLElement) (*Item, error) {
 	if el.Name != "tr" {
 		return nil, errors.New("passed element is not of type <td>, but " + el.Name)
 	}
