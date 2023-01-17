@@ -8,6 +8,7 @@ import (
 
 var c = colly.NewCollector(
 	colly.AllowedDomains("www.degussa-goldhandel.de"),
+	colly.AllowURLRevisit(),
 )
 
 // FilterTable fetches the price table and returns a list of products
